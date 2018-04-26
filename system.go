@@ -19,10 +19,7 @@ func (tl taskList) Less(i, j int) bool {
 	a, b := tl[i], tl[j]
 	if a.Priority > b.Priority {
 		return true
-	} else if b.Priority < a.Priority {
-		return false
-	}
-	if a.Start.Before(b.Start) {
+	} else if a.Priority == b.Priority && a.Start.Before(b.Start) {
 		return true
 	}
 	return false

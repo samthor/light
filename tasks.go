@@ -1,12 +1,13 @@
 package light
 
 import (
+	"log"
 	"time"
 )
 
 type Task struct {
 	id       int // internal ID for ref
-	Priority uint
+	Priority int
 	Color    *Color                     // color
 	Get      func(time.Duration) *Color // callback to fetch color since start
 	Start    time.Time                  // optional start time, if blank, always/now
@@ -77,3 +78,12 @@ func Update() (*Color, error) {
 var (
 	device weblightDevice
 )
+
+// Debug dumps the light task list to console.
+func Debug() {
+	log.Printf("got tasks:")
+	for _, t := range masterSystem.tasks {
+		log.Printf("\t%+v", t)
+	}
+	log.Printf("-")
+}
