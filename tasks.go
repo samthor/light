@@ -8,22 +8,9 @@ import (
 type Task struct {
 	id       int // internal ID for ref
 	Priority int
-	Color    *Color                     // color
-	Get      func(time.Duration) *Color // callback to fetch color since start
-	Start    time.Time                  // optional start time, if blank, always/now
-	Duration time.Duration              // optional duration (<=0 is forever)
-}
-
-func (t Task) colorAt(at time.Time) *Color {
-	var out *Color
-	if t.Get != nil {
-		since := at.Sub(t.Start)
-		out = t.Get(since)
-	}
-	if out == nil {
-		out = t.Color
-	}
-	return out
+	Start    time.Time     // optional start time, if blank, always/now
+	Duration time.Duration // optional duration (<=0 is forever)
+	Color    HasColor
 }
 
 func (t Task) statusAt(at time.Time) (run, delete bool) {

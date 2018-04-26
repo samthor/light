@@ -73,8 +73,9 @@ retry:
 			goto retry
 		}
 
-		if run {
-			out := t.colorAt(at)
+		if run && t.Color != nil {
+			since := at.Sub(t.Start)
+			out := t.Color.colorAt(since)
 			if out != nil {
 				return out
 			}
