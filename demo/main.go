@@ -11,6 +11,7 @@ func main() {
 		Color: &light.Red,
 	})
 
-	err := light.Update()
+	color, err := light.Update()
+	log.Printf("set color: %+v", color)
 	log.Fatal(err)
 }

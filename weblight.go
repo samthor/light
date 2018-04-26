@@ -1,8 +1,6 @@
 package light
 
 import (
-	"log"
-
 	"github.com/karalabe/gousb/usb"
 )
 
@@ -40,7 +38,6 @@ retry:
 		wc.prev = nil
 		device, err := wc.context.OpenDeviceWithVidPid(weblightVendorId, weblightProductId)
 		if err != nil {
-			log.Printf("WebLight set color %+v, device err=%v", color, err)
 			return err
 		}
 		connectedNow = true
@@ -55,10 +52,8 @@ retry:
 			// retry if we didn't already connect during this method
 			goto retry
 		}
-		log.Printf("WebLight set color %+v, err=%v", color, err)
 		return err
 	}
-	log.Printf("WebLight set color %+v, status=%v", color, ret)
 	clone := color
 	wc.prev = &clone
 	wc.status = ret

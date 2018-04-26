@@ -60,13 +60,15 @@ func Add(t Task) Ref {
 }
 
 // Update enacts any current state at the current time.
-func Update() error {
+func Update() (*Color, error) {
 	now := time.Now()
 	color := masterSystem.step(now)
+	ret := color
 	if color == nil {
 		color = &zeroColor
 	}
-	return device.Set(*color)
+	err := device.Set(*color)
+	return ret, err
 }
 
 var (
