@@ -49,9 +49,9 @@ type Ref struct {
 	id int
 }
 
-// Cancel this task. Returns true if a change was made. Safe on nil Ref.
+// Cancel this task. Returns true if a change was made. Safe on nil or zero Ref.
 func (r *Ref) Cancel() bool {
-	if r == nil {
+	if r == nil || r.ts == nil {
 		return false
 	}
 	return r.ts.Cancel(r.id)
