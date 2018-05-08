@@ -1,6 +1,7 @@
 package light
 
 import (
+	"time"
 	"github.com/karalabe/gousb/usb"
 )
 
@@ -23,7 +24,7 @@ type weblightDevice struct {
 
 func (wc *weblightDevice) Set(color Color) error {
 	now := time.Now()
-	if color.Equal(wc.prev) && now.Sub(lastSet) < setAfter {
+	if color.Equal(wc.prev) && now.Sub(wc.lastSet) < setAfter {
 		return nil
 	}
 	var connectedNow bool
@@ -58,7 +59,7 @@ retry:
 		}
 		return err
 	}
-	lastSet = now
+	wc.lastSet = now
 	clone := color
 	wc.prev = &clone
 	wc.status = ret
