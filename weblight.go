@@ -9,6 +9,8 @@ const (
 	weblightProductId    = 0xa800
 	weblightMagicRequest = 0x40
 	weblightRequestColor = 0x01
+
+	setAfter = time.Second
 )
 
 type weblightDevice struct {
@@ -16,10 +18,12 @@ type weblightDevice struct {
 	context *usb.Context
 	device  *usb.Device
 	status  int
+	lastSet time.Time
 }
 
 func (wc *weblightDevice) Set(color Color) error {
-	if color.Equal(wc.prev) {
+	now := time.Now()
+	if color.Equal(wc.prev) && now.Sub(lastSet) < setAfter {
 		return nil
 	}
 	var connectedNow bool
@@ -54,6 +58,7 @@ retry:
 		}
 		return err
 	}
+	lastSet = now
 	clone := color
 	wc.prev = &clone
 	wc.status = ret
