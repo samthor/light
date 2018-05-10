@@ -38,6 +38,13 @@ func (cc ColorConfig) colorAt(d time.Duration) *Color {
 	return cc(d)
 }
 
+// HSLColorConfig is a method that takes a duration and returns a HSLColor.
+type HSLColorConfig func(time.Duration) *HSLColor
+
+func (cc HSLColorConfig) colorAt(d time.Duration) *Color {
+	return cc.colorAt(d)
+}
+
 // HSLColor is a triple of h,s,l: in expected ranges 0-1.
 type HSLColor [3]float64
 
