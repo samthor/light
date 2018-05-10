@@ -36,6 +36,18 @@ func (b *Bit) Set(on bool) {
 	}
 }
 
+// Flip flips the Bit light, returning the new status.
+func (b *Bit) Flip() bool {
+	if b.ref == nil {
+		b.enable()
+		return true
+	} else {
+		b.ref.Cancel()
+		b.ref = nil
+		return false
+	}
+}
+
 func (b *Bit) enable() {
 	b.ref.Cancel() // safe anyway
 	ref := Add(Task{
