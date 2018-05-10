@@ -42,7 +42,8 @@ func (cc ColorConfig) colorAt(d time.Duration) *Color {
 type HSLColorConfig func(time.Duration) *HSLColor
 
 func (cc HSLColorConfig) colorAt(d time.Duration) *Color {
-	return cc.colorAt(d)
+	hsl := cc(d)
+	return hsl.colorAt(d)
 }
 
 // HSLColor is a triple of h,s,l: in expected ranges 0-1.
